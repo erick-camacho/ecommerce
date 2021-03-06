@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { InputLabel, Select, MenuItem, Button, Grid, Typography } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+
 import { commerce } from '../../lib/commerce';
 import FormInput from './CustomTextField';
 
@@ -33,7 +34,7 @@ const AdressForm = ({ checkoutToken, next }) => {
   const fetchShippingOptions = async (checkoutTokenId, country, stateProvince = null) => {
     const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region: stateProvince });
     setShippingOptions(options);
-    setShippingOption(Object.keys(options)[0]);
+    setShippingOption(options[0].id);
   };
 
   useEffect(() => {
