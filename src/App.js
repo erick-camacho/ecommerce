@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { commerce } from './lib/commerce';
-import { Navbar, Products, Cart, Checkout } from "./components";
+import { Navbar, Products, Cart, Checkout, Hero } from "./components";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -65,9 +66,11 @@ const App = () => {
   console.log(cart, products);
   return ( 
     <Router>
+      <CssBaseline />
       <Navbar totalItems={cart.total_items}/>
       <Switch>
         <Route exact path="/">
+          <Hero />
           <Products products={products} onAddToCart={handleAddToCart}/>
         </Route>
         <Route exact path="/cart">
