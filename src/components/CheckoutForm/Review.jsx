@@ -1,6 +1,11 @@
-import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
+import { Typography, List, ListItem, ListItemText, Divider } from '@material-ui/core';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import PaymentForm from './PaymentForm';
 
-const Review = ({ checkoutToken }) => {
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+
+const Review = ({ checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout }) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>Order Summary</Typography>
@@ -18,6 +23,10 @@ const Review = ({ checkoutToken }) => {
           </Typography>
         </ListItem>
       </List>
+      <Divider/>
+      <Elements stripe={stripePromise}>
+        <PaymentForm checkoutToken={checkoutToken} backStep={backStep} nextStep={nextStep} shippingData={shippingData} onCaptureCheckout={onCaptureCheckout}/>
+      </Elements>
     </>
   );
 }

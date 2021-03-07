@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { commerce } from '../../../lib/commerce'
 import AddressForm from '../AddressForm';
-import PaymentForm from '../PaymentForm';
+import Review from '../Review';
 import useStyles from './styles';
 
 const steps = ['Shipping address', 'Payment details'];
@@ -32,7 +32,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     };
 
     generateToken();
-  }, [cart]);
+  }, []);
 
   const next = (data) => {
     setShippingData(data);
@@ -44,7 +44,7 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
       <div>
         <Typography variant="h5">Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}!</Typography>
         <Divider className={classes.divider}/>
-        <Typography variant="subtitle2">Order Ref: {order.customer_refence}</Typography>
+        <Typography variant="subtitle2">Order Ref: {order.customer_reference}</Typography>
       </div>
       <br/>
       <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
@@ -66,8 +66,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   }
 
   const Form = () => activeStep === 0 
-    ? <AddressForm checkoutToken={checkoutToken} nextStep={nextStep} setShippingData={setShippingData} next={next}/>
-    : <PaymentForm checkoutToken={checkoutToken} backStep={backStep} nextStep={nextStep} shippingData={shippingData} onCaptureCheckout={onCaptureCheckout}/> 
+    ? <AddressForm checkoutToken={checkoutToken} next={next}/>
+    : <Review checkoutToken={checkoutToken} backStep={backStep} nextStep={nextStep} shippingData={shippingData} onCaptureCheckout={onCaptureCheckout}/> 
 
   return (
     <>
